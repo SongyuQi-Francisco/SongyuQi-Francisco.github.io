@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Songyu Qi"
-description              : "Songyu Qi — UNSW Sydney. Agentic recommender systems, agent skill libraries, and persistent user memory for LLM agents."
+description              : "Songyu Qi — UNSW Sydney. Agentic recommender systems (Agentic RS) and evidence-grounded memory governance for long-lived recommender agents."
 url                      : "https://songyuqi-francisco.github.io"
 baseurl                  : ""
 repository               : "SongyuQi-Francisco/SongyuQi-Francisco.github.io"
