@@ -1,0 +1,40 @@
+# Research outputs shown on the homepage and the /research page.
+# Fields:
+#   badge      – short label on the figure (e.g. "Under Review", "ACL 2027", "Report")
+#   image      – figure in /images
+#   categories – used by the filter buttons (agentic-rec, agent-skills)
+#   authors    – Markdown; your own name in **bold**; <sup>*</sup> = equal contribution
+#   summary    – one-sentence TL;DR (optional)
+#   links      – Markdown links (Paper / arXiv / Code ...)
+
+- title: "ColdSkill: Semantic-Graph Skill-Skill Expansion for Item-Side Cold-Start Routing in Agent Skills"
+  badge: "Under Review"
+  image: "images/coldskill.jpg"
+  categories:
+    - agent-skills
+  # TODO: replace with the full author list once the paper is public
+  authors: |
+    **Songyu Qi** (first author), et al.
+  venue: '*Under review*, 2026'
+  summary: >-
+    Newly added skills in an agent's skill library have no usage history, so query-only routing tends to miss them.
+    ColdSkill is a zero-retraining expansion layer that finds such cold skills through related warm skills,
+    using semantic skill-skill similarity and a task co-membership graph.
+  links: '*Preprint coming soon*'
+
+- title: "CPSE: Cognitive Persona Agent Skill Evolution for Recommender Systems"
+  badge: "Research Report"
+  image: "images/cpse.jpg"
+  categories:
+    - agentic-rec
+    - agent-skills
+  authors: |
+    **Songyu Qi**.
+    Supervised by [Prof. Lina Yao](https://www.linayao.com/), mentored by [Chengkai Huang](https://chengkai-huang.github.io/)
+  venue: '*Research Project, UNSW Sydney*, 2026'
+  summary: >-
+    Splits a recommendation agent's memory into per-user cognitive profiles (declarative) and a globally shared
+    skill library (procedural). Users are routed to skills by cognitive persona, and skills are refined from
+    recommendation failures, so lessons learned from one user carry over to similar users.
+    Evaluated on Amazon, Yelp and Goodreads tasks.
+  links: ''

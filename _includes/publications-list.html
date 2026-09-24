@@ -1,0 +1,47 @@
+<div id="publications" class="pub-filter">
+  <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true" aria-controls="publication-list">All</button>
+  <button class="filter-btn" type="button" data-filter="agentic-rec" aria-pressed="false" aria-controls="publication-list">Agentic RecSys</button>
+  <button class="filter-btn" type="button" data-filter="agent-skills" aria-pressed="false" aria-controls="publication-list">Agent Skills</button>
+</div>
+
+<div id="publication-list" class="publication-list">
+{% for pub in site.data.publications %}
+<div class="pub-item" data-categories="{{ pub.categories | join: ' ' }}">
+<article class="paper-box">
+<div class="paper-box-image">
+  <button class="paper-figure" type="button" data-paper-title="{{ pub.title | escape }}" aria-label="Preview figure for {{ pub.title | escape }}" title="Preview paper figure">
+    <span class="badge">{{ pub.badge }}</span>
+    <img src="{{ pub.image }}" alt="{{ pub.title | escape }}" loading="lazy" decoding="async">
+    <span class="paper-zoom-hint" aria-hidden="true"><i class="fas fa-search-plus"></i></span>
+  </button>
+</div>
+<div class='paper-box-text' markdown="1">
+
+## {{ pub.title }}
+
+{{ pub.authors }}
+
+{{ pub.venue }}
+{% if pub.summary %}
+<span class="paper-summary">{{ pub.summary }}</span>
+{% endif %}
+{% if pub.links and pub.links != "" %}
+{{ pub.links }}
+{% endif %}
+
+</div>
+</article>
+</div>
+
+{% endfor %}
+</div>
+
+<dialog class="paper-lightbox" id="paper-lightbox" aria-labelledby="paper-lightbox-title">
+  <div class="paper-lightbox__content">
+    <button class="paper-lightbox__close" type="button" aria-label="Close figure preview" title="Close">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <img class="paper-lightbox__image" src="" alt="">
+    <p class="paper-lightbox__title" id="paper-lightbox-title"></p>
+  </div>
+</dialog>

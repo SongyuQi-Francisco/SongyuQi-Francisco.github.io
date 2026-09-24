@@ -1,0 +1,1306 @@
+---
+---
+
+/*
+ *    Minimal Mistakes Jekyll Theme
+ *
+ *  - Michael Rose
+ *  - mademistakes.com
+ *  - https://twitter.com/mmistakes
+ *
+*/
+
+@import "vendor/breakpoint/breakpoint"; // media query mixins
+@import "variables";
+@import "mixins";
+@import "vendor/susy/susy";
+
+@import "reset";
+@import "base";
+
+@import "utilities";
+@import "animations";
+@import "tables";
+@import "buttons";
+@import "notices";
+@import "masthead";
+@import "navigation";
+@import "footer";
+@import "syntax";
+
+@import "forms";
+
+@import "page";
+@import "archive";
+@import "sidebar";
+
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+@import "vendor/magnific-popup/magnific-popup";
+@import "print";
+
+$accent-yellow: #FFD600; // UNSW-style yellow
+
+.paper-box {
+    --paper-glow-x: 16%;
+    --paper-glow-y: 20%;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-bottom: 1px #efefef solid;
+    padding: 1.5em 0.5em 1.5em 0.5em;
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(#fff, 0.98), rgba(#fff, 0.94)),
+        radial-gradient(circle at 0 0, rgba($accent-yellow, 0.07), rgba($accent-yellow, 0) 34%);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    &::before {
+        background: radial-gradient(
+            circle at var(--paper-glow-x) var(--paper-glow-y),
+            rgba($accent-yellow, 0.18),
+            rgba($accent-yellow, 0.07) 15%,
+            rgba($accent-yellow, 0) 32%
+        );
+    }
+
+    &::after {
+        background:
+            linear-gradient(135deg, rgba(#fff, 0.18), rgba(#fff, 0) 26%),
+            linear-gradient(315deg, rgba($accent-yellow, 0.08), rgba($accent-yellow, 0) 34%);
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    &.is-glowing,
+    &:hover,
+    &:focus-within {
+        transform: translateY(-3px);
+        border-bottom-color: rgba($accent-yellow, 0.72);
+        box-shadow:
+            0 12px 24px rgba(0, 39, 76, 0.1),
+            0 0 0 1px rgba($accent-yellow, 0.08),
+            0 0 16px rgba($accent-yellow, 0.1);
+
+        &::before {
+            opacity: 1;
+        }
+
+        &::after {
+            opacity: 0.22;
+        }
+    }
+
+    .paper-box-image{
+        justify-content: center;
+        display: flex;
+        width: 100%;
+        order: 2;
+        img {
+            max-width: 300px;
+            box-shadow: 3px 3px 6px #888;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+    }
+
+    .paper-box-text{
+        padding-left: 1.6em;
+        max-width: 100%;
+        order: 1;
+
+        h2 {
+            color: $info-color;
+            font-size: 1.1em;
+            margin-top: 0.3em;
+            margin-bottom: 0.3em;
+        }
+    }
+
+    @include breakpoint($medium) {
+        .paper-box-image{
+            justify-content: left;
+            min-width: 260px;
+            max-width: 30%;
+            order: 1;
+        }
+
+        .paper-box-text{
+            justify-content: left;
+            padding-left: 2.0em;
+            max-width: 70%;
+            order: 2;
+        }
+
+    }
+
+
+}
+
+$scroll_offset : 2em;
+.anchor:before {
+    content: '';
+    display: block;
+    position: relative;
+    width: 0;
+    height: $scroll_offset;
+    margin-top: -$scroll_offset;
+}
+
+// Section headings: ink text + yellow vertical bar on the left.
+// scroll-margin-top replaces the old `:before` hack — gives the same anchor
+// offset without inflating the h1's box height (which made border-left tall).
+.page__content h1 {
+    color: $info-color;
+    border-left: 4px solid $accent-yellow;
+    padding-left: 0.55em;
+    line-height: 1.15;
+    scroll-margin-top: $scroll_offset;
+}
+
+.page__content a {
+    text-decoration: none !important;
+    text-decoration-thickness: 0.11em;
+    text-underline-offset: 0.18em;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline !important;
+        text-decoration-color: $accent-yellow !important;
+    }
+}
+
+.badge {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: absolute;
+    margin-top: .5em;
+    margin-left: -.5em;
+    color: white;
+    background-color: $info-color;
+    font-size: .8em;
+    border-radius: 4px;
+}
+
+.acceptance-rate {
+    display: block;
+    margin-top: 0.3em;
+    color: mix(#fff, $info-color, 34%);
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.research-topic-link {
+    display: inline;
+    margin: 0;
+    padding: 0 0.03em;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: rgba($accent-yellow, 0.82);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+    text-decoration-skip-ink: auto;
+    white-space: normal;
+    cursor: pointer;
+    transition: color 0.16s ease, text-decoration-color 0.16s ease;
+
+    &:hover,
+    &:focus-visible,
+    &.is-preview,
+    &.active {
+        text-decoration-color: $accent-yellow;
+        text-decoration-thickness: 3px;
+        color: $info-color;
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba($accent-yellow, 0.55);
+        outline-offset: 2px;
+    }
+
+}
+
+.pub-filter {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    margin: 1.2em 0 2em 0;
+    align-items: center;
+    scroll-margin-top: 5rem;
+}
+
+.filter-btn {
+    min-height: 38px;
+    padding: 0.42rem 0.95rem;
+    border: 1.5px solid rgba($info-color, 0.78);
+    border-radius: 999px;
+    background: white;
+    color: $info-color;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
+
+    &:hover,
+    &:focus-visible,
+    &.is-preview {
+        transform: translateY(-1px);
+        border-color: $accent-yellow;
+        box-shadow: 0 3px 9px rgba($info-color, 0.12);
+    }
+
+    &.active {
+        background: $info-color;
+        color: white;
+        border-color: $info-color;
+        box-shadow:
+            inset 0 -2px 0 $accent-yellow,
+            0 3px 10px rgba($info-color, 0.2);
+    }
+
+    &.is-trace-target {
+        border-color: $accent-yellow;
+        background: rgba($accent-yellow, 0.14);
+        color: $info-color;
+        box-shadow: inset 0 -2px 0 $accent-yellow;
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba($accent-yellow, 0.55);
+        outline-offset: 2px;
+    }
+}
+
+.pub-list-paper {
+    --paper-glow-x: 14%;
+    --paper-glow-y: 24%;
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 1em 0.5em;
+    border-bottom: 1px #efefef solid;
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(#fff, 0.98), rgba(#fff, 0.94)),
+        radial-gradient(circle at 0 0, rgba($accent-yellow, 0.06), rgba($accent-yellow, 0) 34%);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    &::before {
+        background: radial-gradient(
+            circle at var(--paper-glow-x) var(--paper-glow-y),
+            rgba($accent-yellow, 0.16),
+            rgba($accent-yellow, 0.06) 16%,
+            rgba($accent-yellow, 0) 34%
+        );
+    }
+
+    &::after {
+        background:
+            linear-gradient(135deg, rgba(#fff, 0.16), rgba(#fff, 0) 28%),
+            linear-gradient(315deg, rgba($accent-yellow, 0.07), rgba($accent-yellow, 0) 36%);
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    &.is-glowing,
+    &:hover,
+    &:focus-within {
+        transform: translateY(-2px);
+        border-bottom-color: rgba($accent-yellow, 0.68);
+        box-shadow:
+            0 8px 18px rgba(0, 39, 76, 0.08),
+            0 0 0 1px rgba($accent-yellow, 0.07),
+            0 0 12px rgba($accent-yellow, 0.08);
+
+        &::before {
+            opacity: 1;
+        }
+
+        &::after {
+            opacity: 0.2;
+        }
+    }
+
+    h3 {
+        color: $info-color;
+        margin-top: 0.2em;
+        margin-bottom: 0.25em;
+    }
+
+    p {
+        margin-bottom: 0.25em;
+    }
+}
+
+// ===== Override Susy floats: full-width page, no sidebar =====
+#main {
+    max-width: 1060px !important;
+    width: 100%;
+    min-width: 0;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
+}
+
+// Publication rows use a stable figure stage so mixed image ratios do not
+// change the reading rhythm of the list.
+.pub-item {
+    position: relative;
+    min-width: 0;
+    margin-bottom: 0;
+    transition: opacity 0.22s ease, filter 0.22s ease, transform 0.22s ease;
+
+    &[hidden] {
+        display: none !important;
+    }
+
+    &.is-preview-muted {
+        opacity: 0.3;
+    }
+
+    &.is-preview-match .paper-box,
+    &.is-trace-match .paper-box {
+        border-bottom-color: rgba($accent-yellow, 0.92);
+        background: linear-gradient(90deg, rgba($accent-yellow, 0.11), rgba(#fff, 0) 58%);
+        box-shadow: 3px 0 0 $accent-yellow inset;
+    }
+
+    &.is-trace-match::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -0.72rem;
+        z-index: 3;
+        width: 0.55rem;
+        height: 0.55rem;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: $accent-yellow;
+        box-shadow: 0 0 0 2px rgba($info-color, 0.76);
+        transform: translateY(-50%);
+    }
+
+    &.is-trace-muted {
+        opacity: 0.45;
+        filter: saturate(0.8);
+    }
+
+    &.is-filter-entering {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+.publication-list {
+    position: relative;
+    min-width: 0;
+    padding-left: 0.8rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0.6rem;
+        bottom: 0.6rem;
+        left: 0.32rem;
+        width: 2px;
+        background: linear-gradient(to bottom, rgba($accent-yellow, 0), rgba($accent-yellow, 0.75) 8%, rgba($accent-yellow, 0.75) 92%, rgba($accent-yellow, 0));
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    &.is-tracing::before {
+        opacity: 1;
+    }
+}
+
+.paper-box {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.15rem;
+    align-items: center;
+    min-width: 0;
+    padding: 1.2rem 0.65rem 1.35rem;
+    border: 0;
+    border-bottom: 1px solid rgba($info-color, 0.13);
+    border-radius: 0;
+    background: transparent;
+
+    &.is-glowing,
+    &:hover,
+    &:focus-within {
+        transform: translateY(-1px);
+        border-bottom-color: rgba($accent-yellow, 0.9);
+        background: linear-gradient(90deg, rgba($accent-yellow, 0.065), rgba(#fff, 0) 62%);
+        box-shadow: none;
+    }
+
+    .paper-box-image {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        order: initial;
+    }
+
+    .paper-figure {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+        min-height: 126px;
+        padding: 0.35rem;
+        overflow: visible;
+        box-sizing: border-box;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: zoom-in;
+        appearance: none;
+
+        &:focus-visible {
+            outline: 3px solid rgba($accent-yellow, 0.7);
+            outline-offset: 2px;
+        }
+
+        &:hover img,
+        &:focus-visible img {
+            transform: scale(1.018);
+        }
+
+        &:hover .paper-zoom-hint,
+        &:focus-visible .paper-zoom-hint {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .paper-box-image img {
+        display: block;
+        width: 100%;
+        height: 118px;
+        max-width: 100%;
+        border: 1px solid rgba($info-color, 0.12);
+        border-radius: 5px;
+        background: #fff;
+        box-shadow: 0 5px 14px rgba($info-color, 0.15);
+        object-fit: contain;
+        transition: transform 0.18s ease;
+    }
+
+    .paper-zoom-hint {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0.55rem;
+        bottom: 0.55rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background: rgba($info-color, 0.9);
+        box-shadow: 0 4px 12px rgba($info-color, 0.2);
+        color: #fff;
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .paper-box-text {
+        min-width: 0;
+        max-width: none;
+        padding-left: 0;
+        order: initial;
+
+        h2 {
+            margin: 0 0 0.45rem;
+            color: $info-color;
+            font-size: 1.12rem;
+            line-height: 1.28;
+        }
+
+        p {
+            margin: 0.3rem 0;
+            line-height: 1.48;
+        }
+
+        p:last-child {
+            margin-top: 0.55rem;
+        }
+    }
+
+    .badge {
+        position: absolute;
+        top: 0.45rem;
+        left: 0.35rem;
+        z-index: 2;
+        margin: 0;
+        padding: 0.28rem 0.65rem 0.3rem 0.78rem;
+        border-radius: 0 4px 4px 0;
+        background: $info-color;
+        box-shadow: 0 3px 8px rgba($info-color, 0.18);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        line-height: 1;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            background: $accent-yellow;
+        }
+    }
+}
+
+.paper-lightbox {
+    width: calc(100vw - 2rem);
+    max-width: 1100px;
+    max-height: calc(100vh - 2rem);
+    padding: 0;
+    overflow: visible;
+    border: 1px solid rgba($info-color, 0.2);
+    border-top: 4px solid $accent-yellow;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 24px 70px rgba($info-color, 0.3);
+
+    &::backdrop {
+        background: rgba($info-color, 0.72);
+        backdrop-filter: blur(3px);
+    }
+}
+
+.paper-lightbox__content {
+    position: relative;
+    padding: 3rem 1rem 1rem;
+}
+
+.paper-lightbox__image {
+    display: block;
+    width: 100%;
+    max-height: calc(100vh - 9rem);
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.paper-lightbox__title {
+    margin: 0.85rem 2.5rem 0;
+    color: $info-color;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.paper-lightbox__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba($info-color, 0.18);
+    border-radius: 4px;
+    background: #fff;
+    color: $info-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $accent-yellow;
+        background: rgba($accent-yellow, 0.12);
+        outline: 2px solid rgba($accent-yellow, 0.45);
+        outline-offset: 2px;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .paper-box {
+        grid-template-columns: minmax(240px, 285px) minmax(0, 1fr);
+        gap: 2.2rem;
+        padding: 1.35rem 0.65rem 1.5rem;
+
+        .paper-figure {
+            min-height: 150px;
+        }
+
+        .paper-box-image img {
+            height: 142px;
+        }
+    }
+}
+
+.page,
+.page__inner-wrap,
+.page__content {
+    min-width: 0;
+}
+
+@include breakpoint($large) {
+    .page {
+        float: none !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        max-width: none !important;
+    }
+}
+
+// UMich maize top accent bar — part of the masthead itself
+.masthead {
+    border-top: 4px solid $accent-yellow !important;
+}
+
+// Align masthead width with content area
+.masthead__inner-wrap {
+    max-width: 1060px !important;
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+    box-sizing: border-box !important;
+}
+
+// Simple flexbox nav — bypasses greedy-nav JS entirely
+.site-nav-simple {
+    width: 100%;
+}
+
+.site-nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    li {
+        white-space: nowrap;
+    }
+
+    // Base style — padding always same so hover/active don't shift layout
+    a {
+        display: block;
+        padding: 0.25rem 0.55rem;
+        margin: 0 0.3rem;
+        color: $info-color;
+        text-decoration: none;
+        font-family: $sans-serif-narrow;
+        font-size: $type-size-5;
+        border: 1.5px solid transparent;
+        border-radius: 4px;
+        transition: border-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            border-color: $accent-yellow;
+        }
+    }
+
+    // Home item: flex-grows to push other links right, no border box
+    .site-nav-home {
+        flex: 1;
+        font-weight: 700;
+
+        a {
+            margin-left: 0;
+            font-size: 1em;
+            border-color: transparent !important;
+
+            &:hover {
+                color: $info-color;
+            }
+        }
+    }
+
+    // Active page: maize border box + bold weight so the current section is
+    // unambiguously highlighted, even at a glance.
+    a.active {
+        border-color: $accent-yellow;
+        font-weight: 700;
+    }
+
+    // Icon-only links: no border box, just color change on hover
+    .site-nav-icon a {
+        font-size: 1.1em;
+        padding: 0.25rem 0.45rem;
+        border-color: transparent !important;
+
+        &:hover {
+            color: $info-color;
+        }
+    }
+}
+
+.site-nav-simple {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.site-nav-brand {
+    flex: 1;
+    color: $info-color;
+    font-size: 1em;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.site-nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba($info-color, 0.16);
+    border-radius: 4px;
+    background: #fff;
+    color: $info-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        border-color: $accent-yellow;
+        outline: 2px solid rgba($accent-yellow, 0.32);
+        outline-offset: 2px;
+    }
+}
+
+.site-nav-panel {
+    display: block;
+}
+
+.site-nav-panel .site-nav-links {
+    width: auto;
+
+    .site-nav-icon a span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .masthead__inner-wrap {
+        padding-top: 0.4em !important;
+        padding-bottom: 0.4em !important;
+    }
+
+    .site-nav-toggle {
+        display: inline-flex;
+    }
+
+    .site-nav-panel {
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.45rem);
+        right: 0;
+        z-index: 30;
+        width: calc(100vw - 2rem);
+        max-width: 260px;
+        padding: 0.45rem;
+        border: 1px solid rgba($info-color, 0.14);
+        border-top: 3px solid $accent-yellow;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: 0 14px 34px rgba($info-color, 0.16);
+    }
+
+    .site-nav-simple.is-open .site-nav-panel {
+        display: block;
+    }
+
+    .site-nav-panel .site-nav-links {
+        display: block;
+
+        li {
+            width: 100%;
+        }
+
+        a,
+        .site-nav-icon a {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 42px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0.55rem 0.7rem;
+            font-size: 0.95rem;
+        }
+
+        a.active {
+            border-color: transparent;
+            border-left-color: $accent-yellow;
+            background: rgba($info-color, 0.045);
+        }
+
+        .site-nav-icon a {
+            border-color: transparent !important;
+
+            i {
+                margin-right: 0.6rem;
+            }
+
+            span {
+                position: static;
+                width: auto;
+                height: auto;
+                margin: 0;
+                overflow: visible;
+                clip: auto;
+            }
+        }
+    }
+}
+
+// ===== Home page two-column layout =====
+
+/* --- Mobile-first base styles --- */
+
+.home-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5em;
+    margin-bottom: 2em;
+}
+
+/* Mobile: profile card = horizontal flex (photo left, info right) */
+.home-profile-card {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
+
+.home-avatar {
+    width: 90px !important;
+    max-width: 90px !important;
+    min-width: 80px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 1em;
+}
+
+.home-profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.home-name {
+    font-family: $sans-serif;
+    font-size: 1.4em;
+    font-weight: 700;
+    margin: 0 0 0.25em;
+    line-height: 1.2;
+    color: $info-color;
+}
+
+.home-degree {
+    font-size: 0.88em;
+    margin: 0 0 0.15em;
+    line-height: 1.4;
+    color: $text-color;
+}
+
+.home-university {
+    font-size: 0.88em;
+    font-weight: 600;
+    margin: 0 0 0.15em;
+    color: $info-color;
+}
+
+.home-incoming {
+    font-size: 0.88em;
+    font-weight: 600;
+    margin: 0 0 0.4em;
+    color: $link-color;
+
+    a {
+        overflow-wrap: anywhere;
+    }
+}
+
+.home-labs {
+    font-size: 0.85em;
+    margin-bottom: 0.7em;
+    line-height: 1.6;
+    color: $gray;
+
+    a {
+        color: $link-color;
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
+    }
+}
+
+.home-divider {
+    border: 0;
+    border-top: 1px solid $border-color;
+    margin: 0.7em 0;
+}
+
+.home-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35em;
+    font-size: 0.88em;
+
+    a,
+    .home-link-static {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        color: $info-color;
+        text-decoration: none;
+        line-height: 1.35;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    > a,
+    > .home-link-static {
+        flex: 0 0 auto;
+    }
+
+    i {
+        width: 1.4em;
+        margin-right: 0.45em;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
+
+.home-bio {
+    min-width: 0;
+    overflow-wrap: anywhere;
+
+    > .notice--info {
+        margin: 0 0 1rem !important;
+        padding: 0.8rem 0.95rem;
+        border: 1px solid rgba($info-color, 0.12);
+        border-left: 4px solid $accent-yellow;
+        border-radius: 6px;
+        background: #f7f9fb;
+        box-shadow: none;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* --- Tablet / Desktop (>= 768px): two-column layout --- */
+
+@media screen and (min-width: 768px) {
+    .home-top {
+        grid-template-columns: minmax(220px, 255px) minmax(0, 1fr);
+        gap: 2.5em;
+        align-items: flex-start;
+    }
+
+    .home-profile-card {
+        display: block !important;
+        width: 255px !important;
+        min-width: 255px !important;
+        margin-bottom: 0;
+    }
+
+    .home-avatar {
+        width: 100% !important;
+        max-width: 210px !important;
+        display: block;
+        border-radius: 8px;
+        margin-right: 0;
+        margin-bottom: 0.8em;
+    }
+
+    .home-name {
+        font-size: 1.6em;
+        margin-top: 0.2em;
+    }
+
+    .home-bio {
+        min-width: 0;
+    }
+}
+
+// ===== UMich maize motion effects =====
+
+.tilt-card {
+    --tilt-rx: 0deg;
+    --tilt-ry: 0deg;
+    --tilt-lift: 0;
+    --tilt-glow-x: 50%;
+    --tilt-glow-y: 50%;
+    --tilt-perspective: 900px;
+    --reveal-opacity: 1;
+    --reveal-blur: 0;
+    --reveal-y: 0px;
+
+    position: relative;
+    opacity: var(--reveal-opacity);
+    filter: blur(var(--reveal-blur));
+    transform: perspective(var(--tilt-perspective)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) translate3d(0, var(--reveal-y), 0) translateY(var(--tilt-lift));
+    transform-style: preserve-3d;
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease;
+    will-change: transform;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 180ms ease;
+    }
+
+    &::before {
+        background: radial-gradient(
+            circle at var(--tilt-glow-x) var(--tilt-glow-y),
+            rgba($accent-yellow, 0.2),
+            rgba($accent-yellow, 0.08) 14%,
+            rgba($accent-yellow, 0) 28%
+        );
+    }
+
+    &::after {
+        background:
+            linear-gradient(135deg, rgba(#fff, 0.18), rgba(#fff, 0) 24%),
+            linear-gradient(315deg, rgba($accent-yellow, 0.08), rgba($accent-yellow, 0) 30%);
+    }
+
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    &.is-tilting,
+    &:hover,
+    &:focus-within {
+        --tilt-lift: -5px;
+
+        border-color: rgba($accent-yellow, 0.72);
+        box-shadow:
+            0 14px 26px rgba(0, 39, 76, 0.12),
+            0 0 0 1px rgba($accent-yellow, 0.1),
+            0 0 18px rgba($accent-yellow, 0.12);
+
+        &::before {
+            opacity: 1;
+        }
+
+        &::after {
+            opacity: 0.24;
+        }
+    }
+}
+
+.home-profile-card.tilt-card {
+    --tilt-perspective: 620px;
+
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 39, 76, 0.08);
+    border-radius: 8px;
+    padding: 0.85em;
+    background:
+        linear-gradient(180deg, rgba(#fff, 0.98), rgba(#fff, 0.88)),
+        radial-gradient(circle at 50% 0%, rgba($accent-yellow, 0.12), rgba($accent-yellow, 0) 42%);
+    box-shadow:
+        0 10px 24px rgba(0, 39, 76, 0.08),
+        0 1px 0 rgba(#fff, 0.9) inset;
+    overflow: hidden;
+    transform-origin: center;
+    isolation: isolate;
+
+    &.is-tilting,
+    &:hover,
+    &:focus-within {
+        --tilt-lift: -7px;
+
+        border-color: rgba($accent-yellow, 0.78);
+        box-shadow:
+            0 22px 42px rgba(0, 39, 76, 0.2),
+            0 0 0 1px rgba($accent-yellow, 0.14),
+            0 0 20px rgba($accent-yellow, 0.14),
+            0 1px 0 rgba(#fff, 0.95) inset;
+    }
+
+    &:hover:not(.is-tilting) {
+        --tilt-rx: 1deg;
+        --tilt-ry: -2deg;
+    }
+
+    &::before {
+        background: radial-gradient(
+            circle at var(--tilt-glow-x) var(--tilt-glow-y),
+            rgba($accent-yellow, 0.28),
+            rgba($accent-yellow, 0.08) 13%,
+            rgba($accent-yellow, 0) 30%
+        );
+    }
+
+    &::after {
+        opacity: 0.12;
+        background:
+            linear-gradient(135deg, rgba(#fff, 0.24), rgba(#fff, 0) 28%),
+            linear-gradient(315deg, rgba($accent-yellow, 0.12), rgba($accent-yellow, 0) 34%);
+    }
+
+    .home-avatar {
+        transform: translateZ(34px);
+        box-shadow: 0 12px 22px rgba(0, 39, 76, 0.16);
+        transition: box-shadow 180ms ease;
+    }
+
+    .home-profile-info {
+        transform: translateZ(22px);
+    }
+
+    .home-name,
+    .home-incoming,
+    .home-university,
+    .home-labs {
+        transform: translateZ(10px);
+    }
+
+    .home-links {
+        transform: translateZ(18px);
+    }
+}
+
+.reveal-item {
+    --reveal-opacity: 0;
+    --reveal-blur: 0;
+    --reveal-y: 12px;
+
+    opacity: var(--reveal-opacity);
+    filter: blur(var(--reveal-blur));
+    transform: translate3d(0, var(--reveal-y), 0);
+    transition:
+        opacity 420ms ease,
+        filter 420ms ease,
+        transform 440ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, filter, transform;
+}
+
+.tilt-card.reveal-item {
+    transform: perspective(var(--tilt-perspective)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) translate3d(0, var(--reveal-y), 0) translateY(var(--tilt-lift));
+}
+
+.reveal-item.is-visible {
+    --reveal-opacity: 1;
+    --reveal-blur: 0;
+    --reveal-y: 0px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tilt-card {
+        transform: none;
+        transition:
+            box-shadow 180ms ease,
+            border-color 180ms ease,
+            background-color 180ms ease;
+    }
+
+    .reveal-item {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
+    }
+}
+
+// One-line TL;DR under each research item
+.paper-summary {
+    display: block;
+    margin: 0.35em 0 0.6em;
+    font-size: 0.92em;
+    line-height: 1.55;
+    color: mix(#fff, $text-color, 12%);
+}
